@@ -670,7 +670,14 @@ body.is-card-out .card-slot .card { translate: 0 var(--card-slide-distance); }
   color: var(--color-primary-text);
 }
 .card__info { margin: 2cqi 0 0; font: 400 3.15cqi/1.5 var(--font-sans); color: var(--color-ink); }
-.card__address { font-size: .88em; opacity: .88; display: inline-block; }
+.card__label { font-weight: 400; display: inline-block; }
+.card__address,
+.card__email {
+  font-family: var(--font-sans);
+  font-size: 3.15cqi;
+  font-weight: 700;
+  display: inline-block;
+}
 .card__email { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s; }
 .card__email:hover, .card__email:focus-visible { border-color: currentColor; outline: none; }
 .card__village {
@@ -1298,11 +1305,11 @@ body.is-phase2 #sectionProgram .timeline-step {
 
                 <p class="card__catchphrase" data-bind="card.catchphrase"></p>
                 <p class="card__info">
-                  <span data-bind="card.locationText"></span><br />
+                  <span class="card__label" data-bind="card.locationText"></span><br />
                   <span class="card__address" data-bind="card.address"></span>
                 </p>
                 <p class="card__info">
-                  <span data-bind="card.rsvpLabel"></span><br />
+                  <span class="card__label" data-bind="card.rsvpLabel"></span><br />
                   <a class="card__email" id="cardEmail" data-bind="card.rsvpEmail"></a>
                 </p>
 
