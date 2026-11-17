@@ -670,6 +670,7 @@ body.is-card-out .card-slot .card { translate: 0 var(--card-slide-distance); }
   color: var(--color-primary-text);
 }
 .card__info { margin: 2cqi 0 0; font: 400 3.15cqi/1.5 var(--font-sans); color: var(--color-ink); }
+.card__address { font-size: .88em; opacity: .88; display: inline-block; }
 .card__email { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s; }
 .card__email:hover, .card__email:focus-visible { border-color: currentColor; outline: none; }
 .card__village {
@@ -1076,6 +1077,11 @@ body.is-phase2 #sectionProgram .timeline-step {
   color: var(--color-primary-text);
   margin: 0 0 1.4rem;
 }
+.rsvp-lead strong {
+  font-weight: 700;
+  font-style: normal;
+  color: var(--color-accent-red);
+}
 .rsvp-meta-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -1291,7 +1297,10 @@ body.is-phase2 #sectionProgram .timeline-step {
                 </div>
 
                 <p class="card__catchphrase" data-bind="card.catchphrase"></p>
-                <p class="card__info" data-bind="card.locationText"></p>
+                <p class="card__info">
+                  <span data-bind="card.locationText"></span><br />
+                  <span class="card__address" data-bind="card.address"></span>
+                </p>
                 <p class="card__info">
                   <span data-bind="card.rsvpLabel"></span><br />
                   <a class="card__email" id="cardEmail" data-bind="card.rsvpEmail"></a>
@@ -1597,6 +1606,7 @@ const INVITATION_CONFIG = {
     time: "18H15",
     catchphrase: "Le Noël de nos adhérents",
     locationText: "Salle des fêtes de Plomion",
+    address: "23 place de l'église, Plomion 02140",
     rsvpLabel: "confirmation à l'adresse :",
     rsvpEmail: "o.vitasse@enthierache.com",
     calendarDate: "2026-12-08T18:15:00"
@@ -1653,14 +1663,14 @@ const INVITATION_CONFIG = {
       tag: "Rendez-vous",
       title: "Le Lieu & Accès",
       name: "Salle des fêtes de Plomion",
-      address: "Place des Templiers, 02140 Plomion",
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Place+des+Templiers%2C+02140+Plomion",
+      address: "23 place de l'église, Plomion 02140",
+      mapsUrl: "https://www.google.com/maps/search/?api=1&query=23+place+de+l%27%C3%A9glise%2C+02140+Plomion",
       accessNotes: "🚗 Parking gratuit disponible à proximité immédiate de la salle des fêtes. Accès de plain-pied."
     },
     rsvp: {
       tag: "Confirmation",
       title: "Horaires & Réservation",
-      lead: "Merci de bien vouloir confirmer votre présence avant le 1er décembre afin de nous permettre de préparer au mieux ce moment festif.",
+      lead: "Merci de bien vouloir confirmer votre présence avant le <strong>1er décembre</strong> afin de nous permettre de préparer au mieux ce moment festif.",
       dateSummary: "Mardi 8 Décembre 2026",
       hoursSummary: "Accueil 18h15 · Début 18h30",
       dressCode: "Chic & Touche festive"
@@ -1862,8 +1872,12 @@ const INVITATION_CONFIG = {
   function bindDom(view) {
     $$("[data-bind]").forEach((node) => {
       const value = String(getPath(view, node.dataset.bind));
-      node.textContent = value;
-      node.classList.toggle("is-empty", !value.trim());
+      if (value.includes("<") && value.includes(">")) {
+        node.innerHTML = value;
+      } else {
+        node.textContent = value;
+      }
+      node.classList.toggle("is-empty", !node.textContent.trim());
     });
     root.lang = view.meta?.lang || "fr";
     document.title = view.meta?.pageTitle || `${view.card.title} — ${view.card.topSubtitle}`;
@@ -2042,8 +2056,8 @@ const INVITATION_CONFIG = {
     const end = start ? new Date(start.getTime() + (ev.durationHours || 5) * 3600e3) : null;
     const title = ev.calendarTitle || `${c.title} — ${c.topSubtitle}`;
     const description = ev.description ||
-      [c.topSubtitle, `${c.title} — ${c.dateDay} ${c.dateMonth} · ${c.time}`, c.catchphrase, `Lieu : ${c.locationText} (Place des Templiers, 02140 Plomion)`, `RSVP : ${c.rsvpEmail}`].filter(Boolean).join("\n");
-    return { start, end, title, description, location: `${c.locationText}, Place des Templiers, 02140 Plomion` };
+      [c.topSubtitle, `${c.title} — ${c.dateDay} ${c.dateMonth} · ${c.time}`, c.catchphrase, `Lieu : ${c.locationText} (${c.address || "23 place de l'église, Plomion 02140"})`, `RSVP : ${c.rsvpEmail}`].filter(Boolean).join("\n");
+    return { start, end, title, description, location: `${c.locationText}, ${c.address || "23 place de l'église, 02140 Plomion"}` };
   }
 
   function buildLinks() {
