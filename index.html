@@ -1594,12 +1594,12 @@ const INVITATION_CONFIG = {
     title: "ChristMets Party",
     dateDay: "8",
     dateMonth: "DÉCEMBRE",
-    time: "18H30",
-    catchphrase: "Vin chaud à mort !",
+    time: "18H15",
+    catchphrase: "Le Noël de nos adhérents",
     locationText: "Salle des fêtes de Plomion",
     rsvpLabel: "confirmation à l'adresse :",
-    rsvpEmail: "vienswala@enthierache.com",
-    calendarDate: "2026-12-08T18:30:00"
+    rsvpEmail: "o.vitasse@enthierache.com",
+    calendarDate: "2026-12-08T18:15:00"
   },
   event: {
     timezone: "Europe/Paris",
@@ -1628,24 +1628,24 @@ const INVITATION_CONFIG = {
       title: "Programme de la Soirée",
       timeline: [
         {
+          time: "18h15",
+          title: "Accueil",
+          desc: "Retrouvailles, cocktail de bienvenue."
+        },
+        {
           time: "18h30",
-          title: "Accueil & Vin chaud de bienvenue",
-          desc: "Ouverture des portes à la salle des fêtes, retrouvailles et première dégustation de vin chaud maison aux épices."
+          title: "Début de la soirée",
+          desc: "Mot d'accueil, stratégie METS."
         },
         {
-          time: "19h00",
-          title: "Début officiel de la soirée",
-          desc: "Mot d'accueil, lancement des festivités et apéritif de Noël tous ensemble."
+          time: "19h30",
+          title: "Lancement des festivités",
+          desc: "Sous le signe de la magie de Noël."
         },
         {
-          time: "20h30",
-          title: "Banquet festif de saison",
-          desc: "Grand repas chaleureux et convivial préparé avec amour, accord mets et vins."
-        },
-        {
-          time: "22h00",
-          title: "Animations, Secret Santa & Dancefloor",
-          desc: "Échange de cadeaux surprise, musique, bulles et festivités jusqu'au bout de la nuit !"
+          time: "21h00",
+          title: "Animations",
+          desc: "Animations de Noël."
         }
       ]
     },
@@ -1653,8 +1653,8 @@ const INVITATION_CONFIG = {
       tag: "Rendez-vous",
       title: "Le Lieu & Accès",
       name: "Salle des fêtes de Plomion",
-      address: "Plomion (02140), Thiérache",
-      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Salle+des+f%C3%AAtes+de+Plomion",
+      address: "Place des Templiers, 02140 Plomion",
+      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Place+des+Templiers%2C+02140+Plomion",
       accessNotes: "🚗 Parking gratuit disponible à proximité immédiate de la salle des fêtes. Accès de plain-pied."
     },
     rsvp: {
@@ -1662,7 +1662,7 @@ const INVITATION_CONFIG = {
       title: "Horaires & Réservation",
       lead: "Merci de bien vouloir confirmer votre présence avant le 1er décembre afin de nous permettre de préparer au mieux ce moment festif.",
       dateSummary: "Mardi 8 Décembre 2026",
-      hoursSummary: "Accueil 18h30 · Soirée 19h00",
+      hoursSummary: "Accueil 18h15 · Début 18h30",
       dressCode: "Chic & Touche festive"
     }
   }
@@ -2042,8 +2042,8 @@ const INVITATION_CONFIG = {
     const end = start ? new Date(start.getTime() + (ev.durationHours || 5) * 3600e3) : null;
     const title = ev.calendarTitle || `${c.title} — ${c.topSubtitle}`;
     const description = ev.description ||
-      [c.topSubtitle, `${c.title} — ${c.dateDay} ${c.dateMonth} · ${c.time}`, c.catchphrase, `RSVP : ${c.rsvpEmail}`].filter(Boolean).join("\n");
-    return { start, end, title, description, location: c.locationText };
+      [c.topSubtitle, `${c.title} — ${c.dateDay} ${c.dateMonth} · ${c.time}`, c.catchphrase, `Lieu : ${c.locationText} (Place des Templiers, 02140 Plomion)`, `RSVP : ${c.rsvpEmail}`].filter(Boolean).join("\n");
+    return { start, end, title, description, location: `${c.locationText}, Place des Templiers, 02140 Plomion` };
   }
 
   function buildLinks() {
